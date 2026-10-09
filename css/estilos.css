@@ -1,0 +1,14 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 2rem;
+    color: #333;
+}
+
+h1 {
+    color: #6b7a00;
+}
+
+.ok {
+    color: #2e7d32;
+    font-weight: bold;
+}

@@ -1,0 +1,26 @@
+# Compilados Java
+*.class
+
+# WAR generado (se construye a partir del codigo, no se versiona)
+*.war
+
+# Directorios de build (Maven/Gradle u otros, por si se agregan mas adelante)
+/target/
+/build/
+
+# Logs de Tomcat (los reales viven en C:\xampp\tomcat\logs, fuera del proyecto;
+# esto cubre logs que llegue a generar la propia app dentro de sistema-tg)
+/logs/
+*.log
+
+# Configuracion con credenciales de produccion (no se sube al repo;
+# en produccion esos datos se leen de variables de entorno, ver SEGUIMIENTO_PROYECTO.md)
+**/context.xml
+context-produccion.xml
+
+# Temporales del sistema operativo
+Thumbs.db
+desktop.ini
+.DS_Store
+*.tmp
+*.swp
