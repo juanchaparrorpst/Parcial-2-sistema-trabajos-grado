@@ -18,6 +18,13 @@
 **/context.xml
 context-produccion.xml
 
+# Archivos subidos por los usuarios (soporte de pago, formatos F-DC-124/125,
+# informe de Turnitin, documentos fase 4 - ver SEGUIMIENTO_PROYECTO.md, decision
+# de carga de archivos). Es contenido generado en tiempo de ejecucion, no codigo;
+# la carpeta se versiona vacia (.gitkeep) pero su contenido no.
+/uploads/*
+!/uploads/.gitkeep
+
 # Temporales del sistema operativo
 Thumbs.db
 desktop.ini
