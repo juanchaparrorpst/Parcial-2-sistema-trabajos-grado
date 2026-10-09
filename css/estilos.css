@@ -672,6 +672,9 @@ a {
 .campo-formulario input[type="text"],
 .campo-formulario input[type="email"],
 .campo-formulario input[type="password"],
+.campo-formulario input[type="date"],
+.campo-formulario input[type="number"],
+.campo-formulario input[type="file"],
 .campo-formulario select {
     width: 100%;
     padding: 9px 12px;
@@ -680,6 +683,7 @@ a {
     font-size: 0.95rem;
     font-family: inherit;
     color: var(--gris-texto);
+    background: var(--blanco);
 }
 
 .campo-formulario input:focus,
@@ -692,6 +696,15 @@ a {
     font-size: 0.78rem;
     color: var(--gris-medio);
     margin-top: 4px;
+}
+
+.campo-formulario label.campo-casilla {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 400;
+    font-size: 0.92rem;
+    color: var(--gris-texto);
 }
 
 .grupo-opciones {
@@ -752,6 +765,16 @@ a {
     width: 100%;
 }
 
+.boton-primario:disabled,
+.boton-secundario:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+}
+
+.boton-primario:disabled:hover {
+    background: var(--verde-uts);
+}
+
 .boton-secundario {
     background: var(--blanco);
     border-color: var(--gris-borde);
@@ -777,6 +800,15 @@ a {
 .mensaje-error {
     background: var(--rojo-suave);
     color: var(--rojo-texto);
+    border-radius: var(--radio-chico);
+    padding: 10px 14px;
+    font-size: 0.88rem;
+    margin-bottom: 18px;
+}
+
+.mensaje-aviso {
+    background: #fdf1d6;
+    color: #8a5a00;
     border-radius: var(--radio-chico);
     padding: 10px 14px;
     font-size: 0.88rem;

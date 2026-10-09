@@ -31,7 +31,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><c:out value="${empty tituloPagina ? 'Sistema de Gestion de Trabajos de Grado - UTS' : tituloPagina}" /></title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/estilos.css?v=2">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/estilos.css?v=4">
 </head>
 <body>
 <div class="app-layout">
@@ -88,6 +88,22 @@
                     <a href="${pageContext.request.contextPath}/gestion-usuarios.jsp">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M3.5 19c.9-3 3-4.6 5.5-4.6s4.6 1.6 5.5 4.6"/><circle cx="17" cy="8.5" r="2.3"/><path d="M15.5 14.6c1.9.4 3.3 1.8 4 4.4"/></svg>
                         <span class="menu-etiqueta">Gestión de usuarios</span>
+                    </a>
+                </li>
+            </c:if>
+            <c:if test="${sessionScope.usuarioRol == 'administrador' or sessionScope.usuarioRol == 'coordinacion' or sessionScope.usuarioRol == 'comite'}">
+                <li class="${menuActivo == 'requisitos' ? 'activo' : ''}">
+                    <a href="${pageContext.request.contextPath}/verificar-requisitos.jsp">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12.5l2 2 4-4.5"/><rect x="3.5" y="4" width="17" height="16" rx="2"/></svg>
+                        <span class="menu-etiqueta">Verificar requisitos</span>
+                    </a>
+                </li>
+            </c:if>
+            <c:if test="${sessionScope.usuarioRol == 'coordinacion' or sessionScope.usuarioRol == 'comite'}">
+                <li class="${menuActivo == 'sesion-comite' ? 'activo' : ''}">
+                    <a href="${pageContext.request.contextPath}/sesion-comite.jsp">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg>
+                        <span class="menu-etiqueta">Sesión del comité</span>
                     </a>
                 </li>
             </c:if>
