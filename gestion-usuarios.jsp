@@ -32,6 +32,9 @@
 <c:if test="${param.actualizado == '1'}">
     <p class="mensaje-ok">Datos actualizados correctamente.</p>
 </c:if>
+<c:if test="${param.estadoCambiado == '1'}">
+    <p class="mensaje-ok">Estado del usuario actualizado.</p>
+</c:if>
 
 <jsp:include page="/WEB-INF/tabla-inicio.jsp" />
 <table class="tabla-datos">
@@ -41,6 +44,7 @@
             <th>Correo</th>
             <th>Documento</th>
             <th>Rol</th>
+            <th>Estado</th>
             <th>Acciones</th>
         </tr>
     </thead>
@@ -51,6 +55,16 @@
                 <td><c:out value="${fila.correo}" /></td>
                 <td><c:out value="${fila.documento_identidad}" /></td>
                 <td><c:out value="${fila.rol}" /></td>
+                <td>
+                    <c:choose>
+                        <c:when test="${fila.activo}">
+                            <span class="insignia-estado aprobada">Activo</span>
+                        </c:when>
+                        <c:otherwise>
+                            <span class="insignia-estado pendiente">Inactivo</span>
+                        </c:otherwise>
+                    </c:choose>
+                </td>
                 <td>
                     <button type="button" class="boton-ver"
                         data-titulo-modal="Detalles del usuario"
@@ -74,6 +88,20 @@
                        href="${pageContext.request.contextPath}/usuario-formulario.jsp?id=${fila.id}">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h4L18.5 9.5a2.1 2.1 0 0 0-3-3L5 17v3Z"/><path d="M13.5 7.5l3 3"/></svg>
                     </a>
+                    <form method="post" action="${pageContext.request.contextPath}/procesar-usuario-activo.jsp" style="display:inline;">
+                        <input type="hidden" name="id" value="${fila.id}">
+                        <input type="hidden" name="activar" value="${fila.activo ? 'false' : 'true'}">
+                        <button type="submit" class="boton-editar" title="${fila.activo ? 'Desactivar' : 'Activar'}">
+                            <c:choose>
+                                <c:when test="${fila.activo}">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 8l8 8"/></svg>
+                                </c:when>
+                                <c:otherwise>
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9 12.5l2 2 4-4.5"/></svg>
+                                </c:otherwise>
+                            </c:choose>
+                        </button>
+                    </form>
                 </td>
             </tr>
         </c:forEach>
