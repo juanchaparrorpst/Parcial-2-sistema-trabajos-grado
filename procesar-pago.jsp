@@ -19,10 +19,15 @@
     <sql:param value="${param.proyectoId}" />
 </sql:query>
 
-<%-- RF-15 / RNF-11: la liquidacion y el soporte propio son obligatorios y deben ser PDF. --%>
-<c:set var="parteLiquidacion" value="${pageContext.request.getPart('liquidacion')}" />
-<c:set var="parteSoportePropio" value="${pageContext.request.getPart('soportePropio')}" />
-<c:set var="parteSoporteCompanero" value="${pageContext.request.getPart('soporteCompanero')}" />
+<%-- RF-15 / RNF-11: la liquidacion y el soporte propio son obligatorios y
+     deben ser PDF. <c:catch> evita un error 500 si la peticion no llega como
+     multipart/form-data (encontrado en el Sprint 4 probando CP-05 contra un
+     endpoint parecido; se corrigio aqui tambien por el mismo motivo). --%>
+<c:catch var="errorMultipart">
+    <c:set var="parteLiquidacion" value="${pageContext.request.getPart('liquidacion')}" />
+    <c:set var="parteSoportePropio" value="${pageContext.request.getPart('soportePropio')}" />
+    <c:set var="parteSoporteCompanero" value="${pageContext.request.getPart('soporteCompanero')}" />
+</c:catch>
 
 <c:set var="liquidacionValida" value="${not empty parteLiquidacion and parteLiquidacion.size > 0 and fn:endsWith(fn:toLowerCase(parteLiquidacion.submittedFileName), '.pdf')}" />
 <c:set var="soportePropioValido" value="${not empty parteSoportePropio and parteSoportePropio.size > 0 and fn:endsWith(fn:toLowerCase(parteSoportePropio.submittedFileName), '.pdf')}" />

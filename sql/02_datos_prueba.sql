@@ -128,3 +128,18 @@ INSERT INTO proyecto_integrante (proyecto_id, estudiante_id, es_lider) VALUES
 INSERT INTO asignacion (proyecto_id, director_id, evaluador_id, codirector_id) VALUES
 (1, 2, 3, NULL),  -- Proyecto 1: director Hernán, evaluador Martha, sin codirector
 (2, 2, 3, 1);     -- Proyecto 2: director Hernán, evaluador Martha, codirector Olga
+
+-- ----------------------------------------------------------------------------
+-- historial_fase (Prompt 4.1): proyecto-detalle.jsp calcula el responsable
+-- actual de cada proyecto ("Fase N <responsable>", seccion 3.3 del
+-- documento) leyendo el ultimo historial_fase de su fase_actual. Sin estas
+-- filas, un proyecto sembrado directo por INSERT (sin pasar por
+-- procesar-propuesta-estado.jsp) mostraria el responsable vacio.
+-- ----------------------------------------------------------------------------
+INSERT INTO historial_fase (proyecto_id, fase, estado, fecha, usuario_id) VALUES
+(1, 1, 'completada', NOW(), 3),  -- Proyecto 1 (fase 2): fase 1 cumplida, espera al estudiante
+(1, 2, 'estudiante', NOW(), 3),
+(2, 1, 'completada', NOW(), 3),  -- Proyecto 2 (fase 4): fases 1-3 cumplidas, espera al estudiante
+(2, 2, 'completada', NOW(), 2),
+(2, 3, 'completada', NOW(), 3),
+(2, 4, 'estudiante', NOW(), 3);

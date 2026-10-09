@@ -66,9 +66,15 @@
             <sql:param value="${param.nivel}" />
         </sql:query>
 
+        <%-- RF-19: el proyecto entra directo en fase 2 ("Propuesta", responsable
+             estudiante) porque la fase 1 ("Idea", responsable comite -- elegir/
+             aprobar la idea y asignar director/evaluador/codirector) es
+             exactamente lo que este formulario acaba de hacer; no tendria
+             sentido que un proyecto recien creado mostrara la fase 1 como
+             pendiente cuando ya se cumplio. --%>
         <sql:update dataSource="${applicationScope.dsSistemaTG}">
             INSERT INTO proyecto (consecutivo, anio, nivel, modalidad, fase_actual, estado, idea_id, propuesta_id)
-            VALUES (?, YEAR(CURDATE()), ?, ?, 1, 'en_fase', ?, ?)
+            VALUES (?, YEAR(CURDATE()), ?, ?, 2, 'en_fase', ?, ?)
             <sql:param value="${siguienteConsecutivo.rows[0].siguiente}" />
             <sql:param value="${param.nivel}" />
             <sql:param value="${propuesta.lider_modalidad}" />
@@ -130,9 +136,18 @@
             VALUES (?, 'cambiar_estado:aprobada', 'propuesta', NOW())
             <sql:param value="${sessionScope.usuarioId}" />
         </sql:update>
+        <%-- Historial: fase 1 (Idea) queda completada por esta misma aprobacion;
+             el proyecto arranca en fase 2 esperando que el estudiante suba el
+             formato 124 (RF-20, RF-21). --%>
         <sql:update dataSource="${applicationScope.dsSistemaTG}">
             INSERT INTO historial_fase (proyecto_id, fase, estado, fecha, usuario_id)
-            VALUES (?, 1, 'en_fase', NOW(), ?)
+            VALUES (?, 1, 'completada', NOW(), ?)
+            <sql:param value="${proyectoId}" />
+            <sql:param value="${sessionScope.usuarioId}" />
+        </sql:update>
+        <sql:update dataSource="${applicationScope.dsSistemaTG}">
+            INSERT INTO historial_fase (proyecto_id, fase, estado, fecha, usuario_id)
+            VALUES (?, 2, 'estudiante', NOW(), ?)
             <sql:param value="${proyectoId}" />
             <sql:param value="${sessionScope.usuarioId}" />
         </sql:update>

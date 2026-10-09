@@ -65,6 +65,77 @@
         <url-pattern>/procesar-pago-completar.jsp</url-pattern>
     </servlet-mapping>
 
+    <!--
+        Sprint 4 (RF-21 a RF-25): mismo mecanismo de multipart-config por
+        pagina, esta vez para formatos institucionales (Word o PDF, RNF-11)
+        en vez de liquidaciones. 10 MB de limite, generoso para un .docx con
+        imagenes.
+    -->
+    <servlet>
+        <servlet-name>procesarFormato124</servlet-name>
+        <jsp-file>/procesar-formato124.jsp</jsp-file>
+        <multipart-config>
+            <max-file-size>10485760</max-file-size>
+            <max-request-size>10485760</max-request-size>
+        </multipart-config>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>procesarFormato124</servlet-name>
+        <url-pattern>/procesar-formato124.jsp</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>procesarDirectorRevisar</servlet-name>
+        <jsp-file>/procesar-director-revisar.jsp</jsp-file>
+        <multipart-config>
+            <max-file-size>10485760</max-file-size>
+            <max-request-size>10485760</max-request-size>
+        </multipart-config>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>procesarDirectorRevisar</servlet-name>
+        <url-pattern>/procesar-director-revisar.jsp</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>procesarTurnitin</servlet-name>
+        <jsp-file>/procesar-turnitin.jsp</jsp-file>
+        <multipart-config>
+            <max-file-size>10485760</max-file-size>
+            <max-request-size>10485760</max-request-size>
+        </multipart-config>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>procesarTurnitin</servlet-name>
+        <url-pattern>/procesar-turnitin.jsp</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>procesarEvaluadorRevisar</servlet-name>
+        <jsp-file>/procesar-evaluador-revisar.jsp</jsp-file>
+        <multipart-config>
+            <max-file-size>10485760</max-file-size>
+            <max-request-size>10485760</max-request-size>
+        </multipart-config>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>procesarEvaluadorRevisar</servlet-name>
+        <url-pattern>/procesar-evaluador-revisar.jsp</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>procesarDocumentosFase4</servlet-name>
+        <jsp-file>/procesar-documentos-fase4.jsp</jsp-file>
+        <multipart-config>
+            <max-file-size>10485760</max-file-size>
+            <max-request-size>10485760</max-request-size>
+        </multipart-config>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>procesarDocumentosFase4</servlet-name>
+        <url-pattern>/procesar-documentos-fase4.jsp</url-pattern>
+    </servlet-mapping>
+
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>

@@ -26,7 +26,10 @@
     <sql:param value="${param.proyectoId}" />
 </sql:query>
 
-<c:set var="parteSoporteCompanero" value="${pageContext.request.getPart('soporteCompanero')}" />
+<%-- <c:catch> evita un error 500 si la peticion no llega como multipart/form-data. --%>
+<c:catch var="errorMultipart">
+    <c:set var="parteSoporteCompanero" value="${pageContext.request.getPart('soporteCompanero')}" />
+</c:catch>
 <c:set var="soporteValido" value="${not empty parteSoporteCompanero and parteSoporteCompanero.size > 0 and fn:endsWith(fn:toLowerCase(parteSoporteCompanero.submittedFileName), '.pdf')}" />
 
 <c:choose>
