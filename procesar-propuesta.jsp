@@ -18,29 +18,40 @@
     </c:when>
     <c:otherwise>
         <sql:query var="estudianteActual" dataSource="${applicationScope.dsSistemaTG}">
-            SELECT id FROM estudiante WHERE usuario_id = ?
+            SELECT id, modalidad, porcentaje_creditos, metodologia_aprobada FROM estudiante WHERE usuario_id = ?
             <sql:param value="${sessionScope.usuarioId}" />
         </sql:query>
 
-        <sql:update dataSource="${applicationScope.dsSistemaTG}">
-            INSERT INTO propuesta (idea_id, titulo, objetivo, descripcion, linea_investigacion, estudiante_lider_id, estado)
-            VALUES (?, ?, ?, ?, ?, ?, 'pendiente')
-            <sql:param value="${empty param.ideaId ? null : param.ideaId}" />
-            <sql:param value="${param.titulo}" />
-            <sql:param value="${param.objetivo}" />
-            <sql:param value="${param.descripcion}" />
-            <sql:param value="${param.lineaInvestigacion}" />
-            <sql:param value="${estudianteActual.rows[0].id}" />
-        </sql:update>
+        <%-- RF-14: revalidar requisitos de ingreso en el servidor, por si se evita el chequeo del formulario. --%>
+        <c:set var="umbralRequisitos" value="${estudianteActual.rows[0].modalidad == 'practica' ? 90 : 35}" />
+        <c:set var="cumpleRequisitos" value="${not empty estudianteActual.rows[0].porcentaje_creditos and estudianteActual.rows[0].porcentaje_creditos >= umbralRequisitos and estudianteActual.rows[0].metodologia_aprobada}" />
 
-        <%-- La idea elegida del banco deja de estar disponible para otros. --%>
-        <c:if test="${not empty param.ideaId}">
-            <sql:update dataSource="${applicationScope.dsSistemaTG}">
-                UPDATE idea SET disponible = FALSE WHERE id = ?
-                <sql:param value="${param.ideaId}" />
-            </sql:update>
-        </c:if>
+        <c:choose>
+            <c:when test="${!cumpleRequisitos}">
+                <c:redirect url="/propuesta-formulario.jsp" />
+            </c:when>
+            <c:otherwise>
+                <sql:update dataSource="${applicationScope.dsSistemaTG}">
+                    INSERT INTO propuesta (idea_id, titulo, objetivo, descripcion, linea_investigacion, estudiante_lider_id, estado)
+                    VALUES (?, ?, ?, ?, ?, ?, 'pendiente')
+                    <sql:param value="${empty param.ideaId ? null : param.ideaId}" />
+                    <sql:param value="${param.titulo}" />
+                    <sql:param value="${param.objetivo}" />
+                    <sql:param value="${param.descripcion}" />
+                    <sql:param value="${param.lineaInvestigacion}" />
+                    <sql:param value="${estudianteActual.rows[0].id}" />
+                </sql:update>
 
-        <c:redirect url="/propuestas-banco.jsp?creada=1" />
+                <%-- La idea elegida del banco deja de estar disponible para otros. --%>
+                <c:if test="${not empty param.ideaId}">
+                    <sql:update dataSource="${applicationScope.dsSistemaTG}">
+                        UPDATE idea SET disponible = FALSE WHERE id = ?
+                        <sql:param value="${param.ideaId}" />
+                    </sql:update>
+                </c:if>
+
+                <c:redirect url="/propuestas-banco.jsp?creada=1" />
+            </c:otherwise>
+        </c:choose>
     </c:otherwise>
 </c:choose>
