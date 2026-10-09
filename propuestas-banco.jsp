@@ -94,7 +94,8 @@
                             </c:otherwise>
                         </c:choose>
                         <c:if test="${not empty p.proyecto_id}">
-                            <br><span class="ayuda">Proyecto ${p.consecutivo}-${p.anio}</span>
+                            <br><span class="ayuda">Proyecto
+                            <a href="${pageContext.request.contextPath}/proyecto-detalle.jsp?id=${p.proyecto_id}">${p.consecutivo}-${p.anio}</a></span>
                         </c:if>
                     </td>
                     <td>

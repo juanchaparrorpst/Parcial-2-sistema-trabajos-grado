@@ -71,6 +71,14 @@
                     <span class="menu-etiqueta">Propuestas Banco</span>
                 </a>
             </li>
+            <c:if test="${sessionScope.usuarioRol != 'administrador'}">
+                <li class="${menuActivo == 'proyectos' ? 'activo' : ''}">
+                    <a href="${pageContext.request.contextPath}/mis-proyectos.jsp">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="4" width="17" height="16" rx="2"/><path d="M8 9h8M8 13h8M8 17h5"/></svg>
+                        <span class="menu-etiqueta">Proyectos</span>
+                    </a>
+                </li>
+            </c:if>
             <li class="${menuActivo == 'base-documental' ? 'activo' : ''}">
                 <a href="${pageContext.request.contextPath}/base-documental.jsp">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 7.5 6 5h5l2 2.5h7.5v10a1.5 1.5 0 0 1-1.5 1.5H5a1.5 1.5 0 0 1-1.5-1.5v-10Z"/></svg>
