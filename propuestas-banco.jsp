@@ -8,24 +8,33 @@
 <jsp:include page="/WEB-INF/conexion.jsp" />
 
 <c:set var="esEstudiante" value="${sessionScope.usuarioRol == 'estudiante'}" />
+<c:set var="puedeRevisar" value="${sessionScope.usuarioRol == 'comite' or sessionScope.usuarioRol == 'coordinacion'}" />
 
 <%--
     RF-18: el titulo del proyecto se muestra al estudiante solo despues del
-    pago. El pago se registra sobre un "proyecto" (tabla proyecto), que
-    recien se crea cuando el comite aprueba la propuesta (RF-11, Sprint 3);
-    por ahora pago_id siempre sale vacio y el titulo queda oculto para el
-    estudiante, tal como corresponde antes de que exista ese flujo.
+    pago (pg.id no vacio). py.* trae el proyecto que el comite crea al
+    aprobar la propuesta (RF-11/RF-12/RF-13, Sprint 3); antes de eso
+    (propuesta pendiente o con correcciones) todo eso sale vacio.
+    esIntegranteSesion: el estudiante de sesion es lider o pareja de ese
+    proyecto (proyecto_integrante), para saber si le toca cargar el pago.
 --%>
 <sql:query var="propuestas" dataSource="${applicationScope.dsSistemaTG}">
     SELECT pr.id, pr.titulo, pr.objetivo, pr.descripcion, pr.linea_investigacion, pr.estado,
            ue.nombre_completo AS estudiante_nombre, ue.id AS lider_usuario_id,
-           pg.id AS pago_id
+           py.id AS proyecto_id, py.consecutivo, py.anio, py.nivel,
+           pg.id AS pago_id,
+           (SELECT COUNT(*) FROM proyecto_integrante pi2
+                JOIN estudiante e2 ON e2.id = pi2.estudiante_id
+                WHERE pi2.proyecto_id = py.id AND e2.usuario_id = ?) AS es_integrante_sesion,
+           (SELECT COUNT(*) FROM proyecto_integrante WHERE proyecto_id = py.id) AS num_integrantes,
+           (SELECT COUNT(*) FROM documento WHERE proyecto_id = py.id AND tipo = 'pago') AS num_soportes
     FROM propuesta pr
     JOIN estudiante e ON e.id = pr.estudiante_lider_id
     JOIN usuario ue ON ue.id = e.usuario_id
     LEFT JOIN proyecto py ON py.propuesta_id = pr.id
     LEFT JOIN pago pg ON pg.proyecto_id = py.id
     ORDER BY pr.id DESC
+    <sql:param value="${sessionScope.usuarioId}" />
 </sql:query>
 
 <div class="titulo-pagina">
@@ -40,6 +49,12 @@
 
 <c:if test="${param.creada == '1'}">
     <p class="mensaje-ok">Propuesta enviada correctamente. Queda en estado Pendiente hasta que el comité la revise.</p>
+</c:if>
+<c:if test="${param.revisada == '1'}">
+    <p class="mensaje-ok">Decisión registrada en el acta.</p>
+</c:if>
+<c:if test="${param.pagoRegistrado == '1'}">
+    <p class="mensaje-ok">Soporte de pago enviado correctamente. El comité lo verificará antes de la sesión.</p>
 </c:if>
 
 <jsp:include page="/WEB-INF/tabla-inicio.jsp" />
@@ -78,6 +93,9 @@
                                 <span class="insignia-estado pendiente">Pendiente</span>
                             </c:otherwise>
                         </c:choose>
+                        <c:if test="${not empty p.proyecto_id}">
+                            <br><span class="ayuda">Proyecto ${p.consecutivo}-${p.anio}</span>
+                        </c:if>
                     </td>
                     <td>
                         <button type="button" class="boton-ver"
@@ -89,6 +107,18 @@
                             data-etq-5="Descripción" data-val-5="${fn:escapeXml(p.descripcion)}">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.8-7 10-7 10 7 10 7-3.8 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="2.6"/></svg>
                         </button>
+                        <c:if test="${puedeRevisar and p.estado == 'pendiente'}">
+                            <a class="boton-revisar" title="Revisar"
+                               href="${pageContext.request.contextPath}/propuesta-revisar.jsp?id=${p.id}">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12.5l2 2 4-4.5"/><rect x="3.5" y="4" width="17" height="16" rx="2"/></svg>
+                            </a>
+                        </c:if>
+                        <c:if test="${esEstudiante and p.es_integrante_sesion > 0 and (empty p.pago_id or p.num_soportes < p.num_integrantes)}">
+                            <a class="boton-proponer" title="${empty p.pago_id ? 'Cargar soporte de pago' : 'Completar soporte de pago (falta el de tu compañero)'}"
+                               href="${pageContext.request.contextPath}/pago-formulario.jsp?proyectoId=${p.proyecto_id}">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7.5h16v10a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 4 17.5v-10Z"/><path d="M4 10.5h16"/><path d="M7 14h4"/></svg>
+                            </a>
+                        </c:if>
                     </td>
                 </tr>
             </c:if>
