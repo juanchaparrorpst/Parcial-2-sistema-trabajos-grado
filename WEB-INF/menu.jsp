@@ -1,0 +1,94 @@
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%--
+    Encabezado + menu lateral, comun a todas las pantallas. Se incluye con
+    <jsp:include page="/WEB-INF/menu.jsp" /> al principio de cada pagina;
+    la pagina cierra lo que este fragmento abre incluyendo despues
+    /WEB-INF/cierre.jsp.
+
+    Variables que la pagina puede fijar en request ANTES de este include:
+      - tituloPagina: texto para la etiqueta <title> (por defecto el nombre
+        del sistema).
+      - menuActivo: uno de "inicio", "perfil", "banco-ideas", "propuestas",
+        "base-documental", "calendario" - resalta esa opcion del menu.
+
+    El menu por ahora es fijo para todos los roles (se vera por sesion
+    cuando exista el login, Sprint 1). El nombre de usuario de la esquina
+    superior derecha tambien es un dato de ejemplo por la misma razon.
+--%>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><c:out value="${empty tituloPagina ? 'Sistema de Gestion de Trabajos de Grado - UTS' : tituloPagina}" /></title>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/estilos.css">
+</head>
+<body>
+<div class="app-layout">
+
+    <aside class="barra-lateral">
+        <div class="barra-lateral-encabezado">
+            <div class="barra-lateral-logo">
+                <img src="${pageContext.request.contextPath}/img/logo-uts.jpeg" alt="Universitaria Tecnologica de Santander">
+            </div>
+            <button type="button" class="boton-colapsar" aria-label="Mostrar u ocultar menu">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+            </button>
+        </div>
+
+        <ul class="menu-lateral">
+            <li class="${menuActivo == 'inicio' ? 'activo' : ''}">
+                <a href="${pageContext.request.contextPath}/index.jsp">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11.5 12 4l8 7.5"/><path d="M6 10v9h12v-9"/></svg>
+                    <span class="menu-etiqueta">Inicio</span>
+                </a>
+            </li>
+            <li class="${menuActivo == 'perfil' ? 'activo' : ''}">
+                <a href="${pageContext.request.contextPath}/mi-perfil.jsp">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.3"/><path d="M5 20c1.2-3.6 4-5.4 7-5.4s5.8 1.8 7 5.4"/></svg>
+                    <span class="menu-etiqueta">Mi perfil</span>
+                </a>
+            </li>
+            <li class="${menuActivo == 'banco-ideas' ? 'activo' : ''}">
+                <a href="${pageContext.request.contextPath}/banco-ideas.jsp">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5.5C5.5 4.6 7.3 4.2 9 4.5c1 .2 2 .6 3 1.2V19c-1-.6-2-1-3-1.2-1.7-.3-3.5.1-5 1V5.5Z"/><path d="M20 5.5c-1.5-.9-3.3-1.3-5-1-1 .2-2 .6-3 1.2V19c1-.6 2-1 3-1.2 1.7-.3 3.5.1 5 1V5.5Z"/></svg>
+                    <span class="menu-etiqueta">Banco de ideas</span>
+                </a>
+            </li>
+            <li class="${menuActivo == 'propuestas' ? 'activo' : ''}">
+                <a href="${pageContext.request.contextPath}/propuestas-banco.jsp">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 20V6a2 2 0 0 1 2-2h7l5 5v11a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2Z"/><path d="M14 4v5h5"/><path d="M8.5 13h7M8.5 16.5h5"/></svg>
+                    <span class="menu-etiqueta">Propuestas Banco</span>
+                </a>
+            </li>
+            <li class="${menuActivo == 'base-documental' ? 'activo' : ''}">
+                <a href="${pageContext.request.contextPath}/base-documental.jsp">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 7.5 6 5h5l2 2.5h7.5v10a1.5 1.5 0 0 1-1.5 1.5H5a1.5 1.5 0 0 1-1.5-1.5v-10Z"/></svg>
+                    <span class="menu-etiqueta">Base documental</span>
+                </a>
+            </li>
+            <li class="${menuActivo == 'calendario' ? 'activo' : ''}">
+                <a href="${pageContext.request.contextPath}/calendario-academico.jsp">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="5.5" width="16" height="14.5" rx="1.8"/><path d="M4 10h16M8 3.5v3.5M16 3.5v3.5"/></svg>
+                    <span class="menu-etiqueta">Calendario académico</span>
+                </a>
+            </li>
+        </ul>
+    </aside>
+
+    <div class="columna-principal">
+        <header class="encabezado-superior">
+            <h1>Bienvenido</h1>
+            <div class="usuario-sesion">
+                <span class="avatar">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.3"/><path d="M5 20c1.2-3.6 4-5.4 7-5.4s5.8 1.8 7 5.4"/></svg>
+                </span>
+                <span>
+                    Usuario de prueba
+                    <span class="usuario-rol">sin iniciar sesion</span>
+                </span>
+            </div>
+        </header>
+
+        <main class="contenido">
