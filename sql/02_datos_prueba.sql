@@ -20,16 +20,20 @@ USE sistema_tg;
 -- ----------------------------------------------------------------------------
 -- usuario (id 1-8): un usuario por rol + 2 estudiantes adicionales para
 -- poder mostrar un proyecto en pareja.
+--
+-- contrasena_hash: SHA-256 de la contraseña de prueba "UTS2026*" para los 8
+-- usuarios (se calcula igual en el navegador con JavaScript al hacer login,
+-- ver sistema-tg/js/ en el Prompt 1.1). Es solo para pruebas locales.
 -- ----------------------------------------------------------------------------
-INSERT INTO usuario (nombre_completo, correo, documento_identidad, rol, activo) VALUES
-('Lizeth Karina Montañez Vargas', 'lizeth.montanez@correo.uts.edu.co', '1005123456', 'administrador', TRUE),
-('Juan Miguel Chaparro Serrano',  'juan.chaparro@correo.uts.edu.co',   '1005123457', 'coordinacion',  TRUE),
-('Olga Patricia Delgado Rueda',   'olga.delgado@correo.uts.edu.co',    '63487521',   'comite',        TRUE),
-('Hernán Darío Martínez López',   'hernan.martinez@correo.uts.edu.co', '91234567',   'director',      TRUE),
-('Martha Lucía Pinzón Cote',      'martha.pinzon@correo.uts.edu.co',   '37589412',   'evaluador',     TRUE),
-('Carlos Andrés Rueda Gómez',     'carlos.rueda@correo.uts.edu.co',    '1098765432', 'estudiante',    TRUE),
-('Daniela Fernanda Ortiz Silva',  'daniela.ortiz@correo.uts.edu.co',   '1098765433', 'estudiante',    TRUE),
-('Esteban Camilo Vargas Peña',    'esteban.vargas@correo.uts.edu.co',  '1098765434', 'estudiante',    TRUE);
+INSERT INTO usuario (nombre_completo, correo, documento_identidad, rol, contrasena_hash, activo) VALUES
+('Lizeth Karina Montañez Vargas', 'lizeth.montanez@correo.uts.edu.co', '1005123456', 'administrador', '0ee848fd40c1fb0e41e6b2e4940d7f1380177d979fff2fa029054aedaed6b5c0', TRUE),
+('Juan Miguel Chaparro Serrano',  'juan.chaparro@correo.uts.edu.co',   '1005123457', 'coordinacion',  '0ee848fd40c1fb0e41e6b2e4940d7f1380177d979fff2fa029054aedaed6b5c0', TRUE),
+('Olga Patricia Delgado Rueda',   'olga.delgado@correo.uts.edu.co',    '63487521',   'comite',        '0ee848fd40c1fb0e41e6b2e4940d7f1380177d979fff2fa029054aedaed6b5c0', TRUE),
+('Hernán Darío Martínez López',   'hernan.martinez@correo.uts.edu.co', '91234567',   'director',      '0ee848fd40c1fb0e41e6b2e4940d7f1380177d979fff2fa029054aedaed6b5c0', TRUE),
+('Martha Lucía Pinzón Cote',      'martha.pinzon@correo.uts.edu.co',   '37589412',   'evaluador',     '0ee848fd40c1fb0e41e6b2e4940d7f1380177d979fff2fa029054aedaed6b5c0', TRUE),
+('Carlos Andrés Rueda Gómez',     'carlos.rueda@correo.uts.edu.co',    '1098765432', 'estudiante',    '0ee848fd40c1fb0e41e6b2e4940d7f1380177d979fff2fa029054aedaed6b5c0', TRUE),
+('Daniela Fernanda Ortiz Silva',  'daniela.ortiz@correo.uts.edu.co',   '1098765433', 'estudiante',    '0ee848fd40c1fb0e41e6b2e4940d7f1380177d979fff2fa029054aedaed6b5c0', TRUE),
+('Esteban Camilo Vargas Peña',    'esteban.vargas@correo.uts.edu.co',  '1098765434', 'estudiante',    '0ee848fd40c1fb0e41e6b2e4940d7f1380177d979fff2fa029054aedaed6b5c0', TRUE);
 
 -- ----------------------------------------------------------------------------
 -- docente (id 1-3): comite, director y evaluador tambien tienen perfil de
