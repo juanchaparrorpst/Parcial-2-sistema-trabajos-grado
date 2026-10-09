@@ -2,6 +2,10 @@
 -- Sistema de Gestion de Trabajos de Grado - UTS
 -- Datos de prueba
 --
+-- IMPORTANTE (Windows): ejecutar siempre con --default-character-set=utf8mb4
+-- (ver la nota al inicio de 01_esquema.sql) o los nombres con tildes/enies
+-- quedan mal guardados.
+--
 -- Requiere haber ejecutado antes 01_esquema.sql sobre una base vacia (los
 -- IDs de este script asumen autoincremento empezando en 1, en el mismo orden
 -- de insercion de abajo).

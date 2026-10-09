@@ -16,6 +16,6 @@
 --%>
 <sql:setDataSource var="dsSistemaTG" scope="application"
     driver="com.mysql.cj.jdbc.Driver"
-    url="jdbc:mysql://localhost:3306/sistema_tg?useUnicode=true&characterEncoding=UTF-8&serverTimezone=America/Bogota"
+    url="jdbc:mysql://localhost:3306/sistema_tg?useUnicode=true&characterEncoding=UTF-8&sessionVariables=character_set_client=utf8mb4,character_set_connection=utf8mb4,character_set_results=utf8mb4&serverTimezone=America/Bogota"
     user="root"
     password="" />

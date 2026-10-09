@@ -2,6 +2,14 @@
 -- Sistema de Gestion de Trabajos de Grado - UTS
 -- Esquema de base de datos (MySQL / MariaDB), traducido de modelo_datos.dbml
 --
+-- IMPORTANTE (Windows): ejecutar siempre con --default-character-set=utf8mb4,
+-- por ejemplo:
+--   mysql --default-character-set=utf8mb4 -u root < sql/01_esquema.sql
+-- Sin ese flag, el cliente mysql.exe de XAMPP en Windows lee este archivo
+-- (que esta en UTF-8) usando la pagina de codigos de la consola (cp850), y
+-- los nombres con tildes/enies quedan guardados mal en la base de datos aunque
+-- el archivo este correcto (ver SEGUIMIENTO_PROYECTO.md, Prompt 1.1).
+--
 -- Fuente: modelo_datos.dbml (raiz del proyecto). Se respetaron los nombres de
 -- tablas, columnas y relaciones, y los modificadores [pk], [increment], [unique],
 -- [not null] y [default: ...] tal como estan en ese archivo.

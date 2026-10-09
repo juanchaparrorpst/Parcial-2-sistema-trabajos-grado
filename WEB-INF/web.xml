@@ -7,6 +7,32 @@
 
     <display-name>Sistema de Gestion de Trabajos de Grado - UTS</display-name>
 
+    <!--
+        Tomcat decodifica los parametros de un POST (application/x-www-form-urlencoded)
+        con ISO-8859-1 por defecto, sin importar que la pagina declare UTF-8 - eso
+        solo controla la salida, no la entrada. Sin esto, los acentos y enies
+        escritos en los formularios (login, alta de usuario, etc.) llegan mal
+        decodificados a ${param....}. SetCharacterEncodingFilter es una clase que
+        trae el propio Tomcat (org.apache.catalina.filters, dentro de catalina.jar);
+        esto es solo configuracion XML, no se escribio ningun .java para esto.
+    -->
+    <filter>
+        <filter-name>FijarCodificacionUTF8</filter-name>
+        <filter-class>org.apache.catalina.filters.SetCharacterEncodingFilter</filter-class>
+        <init-param>
+            <param-name>encoding</param-name>
+            <param-value>UTF-8</param-value>
+        </init-param>
+        <init-param>
+            <param-name>ignore</param-name>
+            <param-value>false</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>FijarCodificacionUTF8</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>

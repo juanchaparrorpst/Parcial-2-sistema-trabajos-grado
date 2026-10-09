@@ -6,16 +6,25 @@
     la pagina cierra lo que este fragmento abre incluyendo despues
     /WEB-INF/cierre.jsp.
 
+    Este fragmento verifica la sesion internamente (incluye
+    verificar-sesion.jsp): si nadie ha iniciado sesion, redirige a
+    login.jsp antes de dibujar nada. Por eso toda pagina que incluya
+    menu.jsp queda protegida automaticamente, sin tener que acordarse de
+    agregar el guard por separado.
+
     Variables que la pagina puede fijar en request ANTES de este include:
       - tituloPagina: texto para la etiqueta <title> (por defecto el nombre
         del sistema).
       - menuActivo: uno de "inicio", "perfil", "banco-ideas", "propuestas",
-        "base-documental", "calendario" - resalta esa opcion del menu.
+        "base-documental", "calendario", "usuarios" - resalta esa opcion
+        del menu.
+      - rolesPermitidos: ver WEB-INF/verificar-sesion.jsp. Si la pagina no
+        la fija, cualquier usuario con sesion iniciada puede entrar.
 
-    El menu por ahora es fijo para todos los roles (se vera por sesion
-    cuando exista el login, Sprint 1). El nombre de usuario de la esquina
-    superior derecha tambien es un dato de ejemplo por la misma razon.
+    El menu lateral es el mismo para todos los roles, salvo "Gestión de
+    usuarios" que solo ve el administrador.
 --%>
+<jsp:include page="/WEB-INF/verificar-sesion.jsp" />
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -74,6 +83,14 @@
                     <span class="menu-etiqueta">Calendario académico</span>
                 </a>
             </li>
+            <c:if test="${sessionScope.usuarioRol == 'administrador'}">
+                <li class="${menuActivo == 'usuarios' ? 'activo' : ''}">
+                    <a href="${pageContext.request.contextPath}/gestion-usuarios.jsp">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M3.5 19c.9-3 3-4.6 5.5-4.6s4.6 1.6 5.5 4.6"/><circle cx="17" cy="8.5" r="2.3"/><path d="M15.5 14.6c1.9.4 3.3 1.8 4 4.4"/></svg>
+                        <span class="menu-etiqueta">Gestión de usuarios</span>
+                    </a>
+                </li>
+            </c:if>
         </ul>
     </aside>
 
@@ -85,8 +102,12 @@
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.3"/><path d="M5 20c1.2-3.6 4-5.4 7-5.4s5.8 1.8 7 5.4"/></svg>
                 </span>
                 <span>
-                    Usuario de prueba
-                    <span class="usuario-rol">sin iniciar sesion</span>
+                    <c:out value="${sessionScope.usuarioNombre}" />
+                    <span class="usuario-rol">
+                        <c:out value="${sessionScope.usuarioRol}" />
+                        &middot;
+                        <a class="enlace-cerrar-sesion" href="${pageContext.request.contextPath}/cerrar-sesion.jsp">Cerrar sesión</a>
+                    </span>
                 </span>
             </div>
         </header>
