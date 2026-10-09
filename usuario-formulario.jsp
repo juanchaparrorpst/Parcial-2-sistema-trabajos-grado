@@ -145,6 +145,6 @@
     // usuario-formulario.js sepa que bloque de campos mostrar al cargar.
     var ROL_ACTUAL_EDICION = "${modoEdicion ? u.rol : ''}";
 </script>
-<script src="${pageContext.request.contextPath}/js/usuario-formulario.js"></script>
+<script src="${pageContext.request.contextPath}/js/usuario-formulario.js?v=2"></script>
 
 <jsp:include page="/WEB-INF/cierre.jsp" />

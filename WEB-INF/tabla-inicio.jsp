@@ -20,7 +20,6 @@
                 <option value="5">5</option>
                 <option value="10" selected>10</option>
                 <option value="20">20</option>
-                <option value="50">50</option>
             </select>
             registros por página
         </label>

@@ -349,6 +349,23 @@ a {
     min-width: 220px;
 }
 
+.tabla-filtros-extra {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 16px;
+}
+
+.tabla-filtro-extra {
+    border: 1px solid var(--gris-borde);
+    border-radius: var(--radio-chico);
+    padding: 6px 10px;
+    font-size: 0.85rem;
+    font-family: inherit;
+    color: var(--gris-texto);
+    background: var(--blanco);
+}
+
 .tabla-datos {
     width: 100%;
     border-collapse: collapse;
@@ -412,9 +429,11 @@ a {
     color: var(--gris-suave-texto);
 }
 
-/* Boton circular de accion (ver detalle / editar) */
+/* Boton circular de accion (ver detalle / editar / revisar / proponer) */
 .boton-ver,
-.boton-editar {
+.boton-editar,
+.boton-revisar,
+.boton-proponer {
     width: 34px;
     height: 34px;
     border-radius: var(--radio-chico);
@@ -429,16 +448,22 @@ a {
 }
 
 .boton-ver:hover,
-.boton-editar:hover {
+.boton-editar:hover,
+.boton-revisar:hover,
+.boton-proponer:hover {
     background: #000;
 }
 
-.boton-ver + .boton-editar {
+.boton-ver + .boton-editar,
+.boton-ver + .boton-revisar,
+.boton-ver + .boton-proponer {
     margin-left: 6px;
 }
 
 .boton-ver svg,
-.boton-editar svg {
+.boton-editar svg,
+.boton-revisar svg,
+.boton-proponer svg {
     width: 17px;
     height: 17px;
 }

@@ -13,7 +13,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ingresar - Sistema de Gestion de Trabajos de Grado</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/estilos.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/estilos.css?v=2">
 </head>
 <body>
 <div class="pagina-login">
@@ -46,6 +46,6 @@
     </div>
 </div>
 
-<script src="${pageContext.request.contextPath}/js/login.js"></script>
+<script src="${pageContext.request.contextPath}/js/login.js?v=2"></script>
 </body>
 </html>

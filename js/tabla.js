@@ -1,15 +1,21 @@
-// Tabla reutilizable: buscador + "Mostrar N registros por pagina" + paginacion.
-// Funciona sobre cualquier bloque .tabla-contenedor que tenga dentro una
-// .tabla-datos con <tbody><tr>...</tr></tbody>. Es solo filtrado/paginado en
-// el navegador (los datos de ejemplo de esta pantalla son fijos); cuando las
-// paginas se conecten a la base de datos, esto se puede adaptar a paginacion
-// del lado del servidor sin cambiar el marcado.
+// Tabla reutilizable: buscador + filtros extra opcionales + "Mostrar N
+// registros por pagina" + paginacion. Funciona sobre cualquier bloque
+// .tabla-contenedor que tenga dentro una .tabla-datos con
+// <tbody><tr>...</tr></tbody>. Es solo filtrado/paginado en el navegador.
+//
+// Filtros extra (RF-08, "banco de ideas con filtros"): cualquier <select
+// class="tabla-filtro-extra" data-filtro-campo="docente"> dentro del mismo
+// .tabla-contenedor filtra las filas que tengan data-docente="valor" igual
+// al valor elegido. Funcionan solos o combinados entre si y con el buscador
+// de texto (todos se combinan con "Y"). El nombre del campo es libre, lo
+// define cada pagina (docente, periodo, disponible, etc.).
 (function () {
     "use strict";
 
     function inicializarTabla(contenedor) {
         var selectPagina = contenedor.querySelector(".tabla-select-pagina");
         var inputBuscar = contenedor.querySelector(".tabla-input-buscar");
+        var filtrosExtra = Array.prototype.slice.call(contenedor.querySelectorAll(".tabla-filtro-extra"));
         var tabla = contenedor.querySelector(".tabla-datos");
         var filas = tabla ? Array.prototype.slice.call(tabla.querySelectorAll("tbody tr")) : [];
         var infoEl = contenedor.querySelector(".tabla-paginacion-info");
@@ -22,10 +28,22 @@
 
         var paginaActual = 1;
 
+        function filaCoincideConFiltrosExtra(fila) {
+            return filtrosExtra.every(function (select) {
+                var valor = select.value;
+                if (!valor) {
+                    return true;
+                }
+                var campo = select.getAttribute("data-filtro-campo");
+                return fila.getAttribute("data-" + campo) === valor;
+            });
+        }
+
         function filasVisiblesPorBusqueda() {
             var termino = inputBuscar ? inputBuscar.value.trim().toLowerCase() : "";
             return filas.filter(function (fila) {
-                var coincide = termino === "" || fila.textContent.toLowerCase().indexOf(termino) !== -1;
+                var coincideTexto = termino === "" || fila.textContent.toLowerCase().indexOf(termino) !== -1;
+                var coincide = coincideTexto && filaCoincideConFiltrosExtra(fila);
                 fila.classList.toggle("fila-oculta", !coincide);
                 return coincide;
             });
@@ -99,6 +117,12 @@
                 render();
             });
         }
+        filtrosExtra.forEach(function (select) {
+            select.addEventListener("change", function () {
+                paginaActual = 1;
+                render();
+            });
+        });
         if (botonPrimera) botonPrimera.addEventListener("click", function () { paginaActual = 1; render(); });
         if (botonAnterior) botonAnterior.addEventListener("click", function () { paginaActual--; render(); });
         if (botonSiguiente) botonSiguiente.addEventListener("click", function () { paginaActual++; render(); });
