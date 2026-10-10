@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Contexto propio de esta aplicacion (se empaqueta dentro del WAR, en
+    META-INF/, distinto de WEB-INF/, que es donde vive el resto del
+    proyecto. Tomcat lo lee automaticamente para ESTA app, sin tocar nada
+    global del servidor.
+
+    OJO al editar este comentario: es un comentario XML real (no un
+    comentario JSP), asi que no puede contener un guion repetido dos veces
+    seguidas en ningun lado del texto (rompe el parser con SAXParseException;
+    error real encontrado y corregido en el Prompt D.2).
+
+    Declara el DataSource "jdbc/sistemaTG" que WEB-INF/conexion.jsp busca
+    por JNDI (ver ese archivo). Los valores de conexion NO estan escritos
+    aqui: se leen de variables de entorno del sistema operativo con el
+    mecanismo ${parametro:-valorPorDefecto} del propio Tomcat (no es un
+    invento del proyecto, esta documentado por Apache:
+    https://tomcat.apache.org/tomcat-9.0-doc/config/systemprops.html).
+
+    Esto es intencional por dos motivos (Prompt D.1/D.2):
+      1. RNF-09 (escalabilidad): un <Resource type="javax.sql.DataSource">
+         de Tomcat es un *pool* de conexiones real (Apache Commons DBCP2),
+         a diferencia de <sql:setDataSource driver=".."> que abre una
+         conexion nueva por cada peticion.
+      2. Permite usar la MISMA configuracion en desarrollo local (XAMPP,
+         sin Docker) y en Docker/produccion (Render + Clever Cloud) sin
+         tocar ningun archivo: si las variables de entorno no existen (caso
+         de XAMPP local), se usan los valores por defecto de abajo, que son
+         exactamente los de XAMPP (localhost, sistema_tg, root, sin
+         contraseña): cero configuracion adicional para seguir
+         desarrollando como hasta ahora.
+
+    Para que Tomcat lea VARIABLES DE ENTORNO del sistema operativo (no solo
+    propiedades -Dx=y de la JVM) hace falta activar
+    org.apache.tomcat.util.digester.EnvironmentPropertySource; ver la
+    variable CATALINA_OPTS del Dockerfile. En XAMPP local no se activa (no
+    hace falta: sin ella, cada ${...} simplemente no encuentra ninguna
+    variable que lo reemplace y usa su valor por defecto, que ya es el
+    correcto para XAMPP).
+
+    Nombres de variables (Prompt D.2, confirmados con el usuario):
+      CC_MYSQL_HOST, CC_MYSQL_PORT, CC_MYSQL_DB, CC_MYSQL_USER, CC_MYSQL_PASSWORD
+    En Render (Prompt D.3) se configuran como variables de entorno del
+    servicio, con los valores reales de Clever Cloud. Nunca se escriben en
+    este archivo ni en ningun otro del repositorio.
+-->
+<Context>
+    <Resource name="jdbc/sistemaTG"
+              auth="Container"
+              type="javax.sql.DataSource"
+              driverClassName="com.mysql.cj.jdbc.Driver"
+              url="jdbc:mysql://${CC_MYSQL_HOST:-localhost}:${CC_MYSQL_PORT:-3306}/${CC_MYSQL_DB:-sistema_tg}?useUnicode=true&amp;characterEncoding=UTF-8&amp;sessionVariables=character_set_client=utf8mb4,character_set_connection=utf8mb4,character_set_results=utf8mb4&amp;useOldAliasMetadataBehavior=true&amp;serverTimezone=America/Bogota"
+              username="${CC_MYSQL_USER:-root}"
+              password="${CC_MYSQL_PASSWORD:-}"
+              maxTotal="20"
+              maxIdle="10"
+              maxWaitMillis="10000" />
+</Context>

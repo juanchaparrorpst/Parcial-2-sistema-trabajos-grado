@@ -144,4 +144,17 @@
         <session-timeout>30</session-timeout>
     </session-config>
 
+    <!--
+        Prompt D.2: declara el DataSource que WEB-INF/conexion.jsp busca
+        por JNDI (dataSource="jdbc/sistemaTG"). La conexion real la define
+        META-INF/context.xml, leyendo variables de entorno; aqui solo se
+        declara que la app espera ese recurso, por estandar de Servlet.
+    -->
+    <resource-ref>
+        <description>DataSource de sistema_tg (ver META-INF/context.xml)</description>
+        <res-ref-name>jdbc/sistemaTG</res-ref-name>
+        <res-type>javax.sql.DataSource</res-type>
+        <res-auth>Container</res-auth>
+    </resource-ref>
+
 </web-app>

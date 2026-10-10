@@ -13,9 +13,14 @@
 /logs/
 *.log
 
-# Configuracion con credenciales de produccion (no se sube al repo;
-# en produccion esos datos se leen de variables de entorno, ver SEGUIMIENTO_PROYECTO.md)
+# Configuracion con credenciales de produccion (no se sube al repo).
+# META-INF/context.xml es la EXCEPCION a proposito (Prompt D.2): no tiene
+# ninguna credencial escrita, solo ${VARIABLE:-valorPorDefecto} que Tomcat
+# resuelve contra variables de entorno en tiempo de arranque -- por eso SI
+# se versiona. Cualquier OTRO context.xml (por ejemplo uno local con datos
+# reales a mano) sigue bloqueado.
 **/context.xml
+!META-INF/context.xml
 context-produccion.xml
 
 # Archivos subidos por los usuarios (soporte de pago, formatos F-DC-124/125,
