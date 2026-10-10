@@ -1,0 +1,27 @@
+# Control de versiones: irrelevante dentro de la imagen.
+.git
+.gitignore
+.gitattributes
+
+# Scripts de base de datos y de infraestructura (RNF-10): NO deben quedar
+# dentro del WAR -- Tomcat serviria sql/01_esquema.sql como archivo
+# estatico descargable por cualquiera si quedara ahi adentro (expondria el
+# esquema completo de la base de datos). scripts/respaldo-bd.ps1 tampoco
+# tiene sentido dentro de un contenedor Linux (es PowerShell para Windows).
+sql/
+scripts/
+
+# Documentacion del repositorio, no contenido de la aplicacion.
+*.md
+
+# Contenido generado en tiempo de ejecucion, no codigo (mismo criterio que
+# .gitignore): se versiona vacio (.gitkeep) pero su contenido real no debe
+# quedar horneado dentro de la imagen.
+uploads/*
+!uploads/.gitkeep
+WEB-INF/backups/*
+!WEB-INF/backups/.gitkeep
+
+# Imagen Docker en si (no tiene sentido copiarse a si misma).
+Dockerfile
+.dockerignore
