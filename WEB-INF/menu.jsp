@@ -31,7 +31,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><c:out value="${empty tituloPagina ? 'Sistema de Gestion de Trabajos de Grado - UTS' : tituloPagina}" /></title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/estilos.css?v=4">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/estilos.css?v=5">
 </head>
 <body>
 <div class="app-layout">
@@ -112,6 +112,28 @@
                     <a href="${pageContext.request.contextPath}/sesion-comite.jsp">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg>
                         <span class="menu-etiqueta">Sesión del comité</span>
+                    </a>
+                </li>
+                <li class="${menuActivo == 'actas-comite' ? 'activo' : ''}">
+                    <a href="${pageContext.request.contextPath}/actas-comite.jsp">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5h9l3 3v14H6z"/><path d="M9 9h6M9 12.5h6M9 16h4"/></svg>
+                        <span class="menu-etiqueta">Actas del comité</span>
+                    </a>
+                </li>
+            </c:if>
+            <c:if test="${sessionScope.usuarioRol == 'comite' or sessionScope.usuarioRol == 'coordinacion' or sessionScope.usuarioRol == 'director' or sessionScope.usuarioRol == 'evaluador'}">
+                <li class="${menuActivo == 'historico' ? 'activo' : ''}">
+                    <a href="${pageContext.request.contextPath}/historico-proyectos.jsp">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="12" r="7.5"/><path d="M11 7.5V12l3.2 2M4 5l2.2 1.6M18 5l-2.2 1.6"/></svg>
+                        <span class="menu-etiqueta">Histórico de proyectos</span>
+                    </a>
+                </li>
+            </c:if>
+            <c:if test="${sessionScope.usuarioRol == 'administrador' or sessionScope.usuarioRol == 'coordinacion'}">
+                <li class="${menuActivo == 'respaldo' ? 'activo' : ''}">
+                    <a href="${pageContext.request.contextPath}/respaldo-base-datos.jsp">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="6" rx="7.5" ry="2.8"/><path d="M4.5 6v12c0 1.5 3.4 2.8 7.5 2.8s7.5-1.3 7.5-2.8V6"/><path d="M4.5 12c0 1.5 3.4 2.8 7.5 2.8s7.5-1.3 7.5-2.8"/></svg>
+                        <span class="menu-etiqueta">Respaldo de base de datos</span>
                     </a>
                 </li>
             </c:if>

@@ -598,6 +598,39 @@ a {
 }
 
 /* ----------------------------------------------------------------------
+   Busqueda de proyecto (RF-30, mis-proyectos.jsp)
+   ---------------------------------------------------------------------- */
+.formulario-busqueda-proyecto {
+    background: var(--blanco);
+    border: 1px solid var(--gris-borde);
+    border-radius: var(--radio);
+    padding: 16px 20px;
+    margin-bottom: 20px;
+    box-shadow: var(--sombra);
+}
+
+.formulario-busqueda-proyecto label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 8px;
+    font-size: 0.9rem;
+}
+
+.formulario-busqueda-proyecto-fila {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.formulario-busqueda-proyecto-fila input[type="text"] {
+    flex: 1 1 280px;
+    padding: 9px 12px;
+    border: 1px solid var(--gris-borde);
+    border-radius: var(--radio);
+    font-size: 0.95rem;
+}
+
+/* ----------------------------------------------------------------------
    Utilidades
    ---------------------------------------------------------------------- */
 .pagina-marcador {

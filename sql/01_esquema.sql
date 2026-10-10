@@ -266,3 +266,19 @@ CREATE TABLE auditoria (
     fecha       DATETIME NOT NULL,
     CONSTRAINT fk_auditoria_usuario FOREIGN KEY (usuario_id) REFERENCES usuario(id)
 ) ENGINE=InnoDB;
+
+-- ----------------------------------------------------------------------------
+-- Indices adicionales (RNF-08, Sprint 5): las llaves foraneas ya quedan
+-- indexadas automaticamente por InnoDB (lo exige para la restriccion), igual
+-- que correo/documento_identidad por su UNIQUE. Estas tres son las unicas
+-- columnas de busqueda/filtro frecuente que quedaban sin indice:
+--   - usuario.nombre_completo: RF-30 (supervision por coordinacion, busqueda
+--     por nombre) y el buscador por nombre de varias pantallas.
+--   - proyecto.estado: RF-35 (modulo historico, filtra "finalizado").
+--   - proyecto (nivel, anio): RF-12 (consecutivo anual por nivel, Sprint 3),
+--     ya se usaba desde el Sprint 3 sin indice.
+-- Probado con 400 estudiantes de prueba (CP-09) - ver SEGUIMIENTO_PROYECTO.md.
+-- ----------------------------------------------------------------------------
+CREATE INDEX idx_usuario_nombre ON usuario (nombre_completo);
+CREATE INDEX idx_proyecto_estado ON proyecto (estado);
+CREATE INDEX idx_proyecto_nivel_anio ON proyecto (nivel, anio);

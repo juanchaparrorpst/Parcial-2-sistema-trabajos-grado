@@ -25,6 +25,13 @@ context-produccion.xml
 /uploads/*
 !/uploads/.gitkeep
 
+# Copias de seguridad de la base de datos (RNF-10). Contienen todos los datos
+# de la aplicacion (incluidos los hashes de contrasena); nunca se suben al
+# repositorio. Viven fuera de /uploads porque esa carpeta SI es publica
+# (Tomcat la sirve como estatica) y estas no deben serlo.
+/WEB-INF/backups/*
+!/WEB-INF/backups/.gitkeep
+
 # Temporales del sistema operativo
 Thumbs.db
 desktop.ini
