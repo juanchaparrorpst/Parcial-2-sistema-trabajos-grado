@@ -1,0 +1,11 @@
+# Evita que Git intente normalizar fin de linea (CRLF/LF) en archivos
+# binarios. Git ya los detecta solo en la mayoria de los casos, pero estos
+# tres tipos se marcan explicito porque el proyecto los genera o recibe
+# (formatos institucionales de ejemplo, jars de librerias, logo) y una
+# conversion accidental los corrompe.
+*.pdf   -text binary
+*.docx  binary
+*.jar   binary
+*.jpeg  binary
+*.jpg   binary
+*.png   binary
