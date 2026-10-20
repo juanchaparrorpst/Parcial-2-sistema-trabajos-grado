@@ -27,13 +27,13 @@
             <tr>
                 <td>F-DC-124</td>
                 <td>Propuesta o anteproyecto que el estudiante envía al director (RF-21).</td>
-                <td><a class="boton-secundario" href="${pageContext.request.contextPath}/formatos/F-DC-124_plantilla.docx">Descargar .docx</a></td>
+                <td><a class="boton-secundario" href="${pageContext.request.contextPath}/formatos/F-DC-124_plantilla.docx">Descargar Word</a></td>
                 <td><a class="boton-secundario" href="${pageContext.request.contextPath}/formatos/F-DC-124_plantilla.pdf">Descargar .pdf</a></td>
             </tr>
             <tr>
                 <td>F-DC-125</td>
                 <td>Formato de evaluación que firma el evaluador al aprobar (RF-24).</td>
-                <td><a class="boton-secundario" href="${pageContext.request.contextPath}/formatos/F-DC-125_plantilla.docx">Descargar .docx</a></td>
+                <td><a class="boton-secundario" href="${pageContext.request.contextPath}/formatos/F-DC-125_plantilla.docx">Descargar Word</a></td>
                 <td><a class="boton-secundario" href="${pageContext.request.contextPath}/formatos/F-DC-125_plantilla.pdf">Descargar .pdf</a></td>
             </tr>
         </tbody>

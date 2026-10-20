@@ -1,0 +1,13 @@
+{
+    "deploy": {
+        "container": "TOMCAT9",
+        "war": [
+            {
+                "file": "target/parcial2-LizethMontanez-JuanChaparro-jstl.war",
+                "context": "/",
+                "checkMe": "/index.jsp"
+
+            }
+        ]
+    }
+}

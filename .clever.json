@@ -1,0 +1,12 @@
+{
+  "apps": [
+    {
+      "app_id": "app_537d2b5c-8f67-470d-a4a4-1e4c0c1a564f",
+      "org_id": "user_96acd955-aabb-4215-af6c-1058ab799d8d",
+      "deploy_url": "https://push-n3-par-clevercloud-customers.services.clever-cloud.com/app_537d2b5c-8f67-470d-a4a4-1e4c0c1a564f.git",
+      "git_ssh_url": "git+ssh://git@push-n3-par-clevercloud-customers.services.clever-cloud.com/app_537d2b5c-8f67-470d-a4a4-1e4c0c1a564f.git",
+      "name": "parcial2-lizethMontanez-JuanChaparro",
+      "alias": "parcial2-lizethMontanez-JuanChaparro"
+    }
+  ]
+}
