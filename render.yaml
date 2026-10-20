@@ -5,3 +5,14 @@ services:
     plan: free
     region: ohio
     autoDeploy: true
+    envVars:
+      - key: CC_MYSQL_HOST
+        value: biw6ypkszru66ejhh6y4-mysql.services.clever-cloud.com
+      - key: CC_MYSQL_PORT
+        value: "3306"
+      - key: CC_MYSQL_DB
+        value: biw6ypkszru66ejhh6y4
+      - key: CC_MYSQL_USER
+        value: urs8knuthrrkgcjb
+      - key: CC_MYSQL_PASSWORD
+        value: zUV0J45nEiDV9P2x12Ju

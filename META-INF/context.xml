@@ -49,9 +49,9 @@
               auth="Container"
               type="javax.sql.DataSource"
               driverClassName="com.mysql.cj.jdbc.Driver"
-              url="jdbc:mysql://${CC_MYSQL_HOST:-localhost}:${CC_MYSQL_PORT:-3306}/${CC_MYSQL_DB:-sistema_tg}?useUnicode=true&amp;characterEncoding=UTF-8&amp;sessionVariables=character_set_client=utf8mb4,character_set_connection=utf8mb4,character_set_results=utf8mb4&amp;useOldAliasMetadataBehavior=true&amp;serverTimezone=America/Bogota"
-              username="${CC_MYSQL_USER:-root}"
-              password="${CC_MYSQL_PASSWORD:-}"
+               url="jdbc:mysql://${CC_MYSQL_HOST:-biw6ypkszru66ejhh6y4-mysql.services.clever-cloud.com}:${CC_MYSQL_PORT:-3306}/${CC_MYSQL_DB:-biw6ypkszru66ejhh6y4}?useUnicode=true&amp;characterEncoding=UTF-8&amp;sessionVariables=character_set_client=utf8mb4,character_set_connection=utf8mb4,character_set_results=utf8mb4&amp;useOldAliasMetadataBehavior=true&amp;serverTimezone=America/Bogota"
+               username="${CC_MYSQL_USER:-urs8knuthrrkgcjb}"
+               password="${CC_MYSQL_PASSWORD:-zUV0J45nEiDV9P2x12Ju}"
               maxTotal="20"
               maxIdle="10"
               maxWaitMillis="10000" />
